@@ -1,0 +1,2 @@
+2023-10-12 14:59:07.934  WARN 12420 --- [http-nio-8080-exec-3] o.o.sblogging.controller.MainController  : This is WARN
+2023-10-12 14:59:07.942 ERROR 12420 --- [http-nio-8080-exec-3] o.o.sblogging.controller.MainController  : This is ERROR
