@@ -1,0 +1,70 @@
+(deffacts spivrobitnyks
+   (spivrobitnyk Dudov 9 2 3300)
+   (spivrobitnyk Melnychuk 6 0 5400)
+   (spivrobitnyk Ludin 13 3 4300)
+   (spivrobitnyk Fedorko 28 4 8100)
+   (spivrobitnyk Pupkin 6 1 6500)
+)
+
+(defrule rule1
+   (spivrobitnyk ?lastname ?experience ?children ?salary)
+   (test (or(>= ?experience 5) (>= ?children 2)))
+   =>
+   (assert (bonus ?lastname (* 0.2 ?salary)))
+   (printout t "Rule 1 fired for " ?lastname crlf)
+)
+
+(defrule rule2
+   (not (bonus ?))
+   =>
+   (printout t "All spivrobitnyks have received a bonus." crlf)
+)
+
+(defrule rule3
+   (spivrobitnyk ?lastname ?experience ?children ?salary)
+   (test(>= ?experience 20))
+   =>
+   (printout t ?lastname " is a labor veteran." crlf)
+)
+
+
+
+======================================================================================
+(deffacts products
+   (Tovar "Audi" 29000 7 2019 "Germany")
+   (Tovar "Hyundai" 18000 5 2021 "Korea")
+   (Tovar "Toyota" 11111 2 2018 "Japan")
+   (Tovar "Infiniti" 12000 8 2017 "America")
+   (Tovar "Chery" 26000 2 2022 "China")
+   (Tovar "Reno" 19500 9 2023 "Ukraine")
+)
+
+(defrule rule-1
+   (or (and (Tovar ?name ?price ?quantity ?year "Ukraine")
+            (test (< ?year 2010)))
+       (and (Tovar ?name ?price ?quantity ?year ?country)
+            (test (< ?quantity 4))))
+   =>
+   (assert (ucinka ?name (* 0.15 ?price)))
+   (printout t "Rule 1: Added ucinka fact for " ?name " with a value of " (* 0.15 ?price) "." crlf)
+)
+
+(defrule rule-2
+   (and (Tovar ?name ?price ?quantity ?year ?country)
+        (test (= ?year 2023)))
+   =>
+   (assert (nacinka ?name (* 0.07 ?price)))
+   (printout t "Rule 2: Added nacinka fact for " ?name " with a value of " (* 0.07 ?price) "." crlf)
+)
+
+(defrule rule-3
+   (Tovar ?name ?price ?quantity ?year "Ukraine")
+   =>
+   (printout t "Rule 3: Product " ?name " is of Ukrainian origin." crlf)
+)
+
+(defrule rule-3-no
+   (not (Tovar ?name ?price ?quantity ?year "Ukraine"))
+   =>
+   (printout t "Rule 3: No Ukrainian products found in the database." crlf)
+)
